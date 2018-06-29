@@ -26,6 +26,7 @@ import com.example.android.datafrominternet.utilities.NetworkUtils;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,19 +57,23 @@ public class MainActivity extends AppCompatActivity {
         String githubQuery = mSearchBoxEditText.getText().toString();
         URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
         mUrlDisplayTextView.setText(githubSearchUrl.toString());
-        String githubSearchResults = null;
+
+        /*String githubSearchResults = null;
         try {
             githubSearchResults = NetworkUtils.getResponseFromHttpUrl(githubSearchUrl);
             mSearchResultsTextView.setText(githubSearchResults);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        // TODO (4) Create a new GithubQueryTask and call its execute method, passing in the url to query
-    }
+        }*/
 
-    // TODO (1) Create a class called GithubQueryTask that extends AsyncTask<URL, Void, String>
-    // TODO (2) Override the doInBackground method to perform the query. Return the results. (Hint: You've already written the code to perform the query)
-    // TODO (3) Override onPostExecute to display the results in the TextView
+        try {
+            mSearchResultsTextView.setText(new GithubQueryTask().execute(githubSearchUrl).get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

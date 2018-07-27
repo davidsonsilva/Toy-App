@@ -28,7 +28,12 @@ dependencies {
     //FAB dependencies
     compile 'com.android.support:design:27.0.2'
 
-    // TODO (1) Add room dependencies
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
 
     //Testing
     // Instrumentation dependencies use androidTestCompile
